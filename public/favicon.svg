@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Muzammil portfolio logo">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#163e77"/><stop offset="1" stop-color="#10223e"/></linearGradient></defs>
+  <rect width="64" height="64" rx="16" fill="url(#g)"/>
+  <path d="M12 49h40" stroke="#7bb6fd" stroke-width="3" stroke-linecap="round"/>
+  <text x="32" y="40" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="800" letter-spacing="-1" fill="#f9fbff">MH</text>
+</svg>

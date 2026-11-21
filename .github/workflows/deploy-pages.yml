@@ -1,0 +1,110 @@
+name: Deploy portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Build and deploy static portfolio
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: https://${{ github.repository_owner }}.github.io/
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint source
+        run: npm run lint
+      - name: Type-check
+        run: npm run typecheck
+      - name: Build static site
+        run: npm run build
+      - name: Smoke-test portfolio, chatbot and current CV
+        shell: bash
+        run: |
+          test -s dist/index.html
+          test -s dist/resume.pdf
+          test -s dist/favicon.svg
+          test -s dist/portfolio-sync.js
+          grep -Fq 'portfolio-sync.js' dist/index.html
+          grep -Fq 'data-feed="https://muzzammil-hussain-portfolio.excellentbrush8.chatgpt.site/live/portfolio.json"' dist/index.html
+          grep -Rqs 'data-dashboard-cv' dist/assets
+          test -s dist/images/muzammil-profile.jpg
+          test -s dist/files/projects/uoh-assistant-poster.pdf
+          test -s dist/files/projects/ai-web-summarizer-poster.pdf
+          for scan in google-ai-essentials.jpg opswat-cip.jpg arch-generative-ai.jpg technik-nest-internship.png; do
+            test -s "dist/images/certificates/$scan"
+          done
+          grep -Rqs 'Smart Fire-Fighting Robot' dist/assets
+          grep -Rqs 'Google AI Essentials' dist/assets
+          grep -Rqs 'Portfolio Assistant' dist/assets
+          grep -Rqs 'muzzammilh26@gmail.com' dist/assets
+          if grep -Rqs 'muzzammilhus26@gmail.com' dist/assets; then
+            echo 'Outdated contact email detected in compiled site' >&2
+            exit 1
+          fi
+      - name: Verify free GitHub Pages hosting (no custom domain)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          test ! -e public/CNAME
+          test ! -e dist/CNAME
+          if grep -RqsE 'portfolio[.][[:alnum:]_-]+[.]com' dist; then
+            echo "::error::The published site references a retired custom domain."
+            exit 1
+          fi
+          configured_domain="$(gh api "repos/${GITHUB_REPOSITORY}/pages" --jq '.cname // ""')"
+          if [ -n "$configured_domain" ]; then
+            echo "::error::GitHub Pages has a custom domain configured. Keep Settings > Pages > Custom domain empty."
+            exit 1
+          fi
+          echo "Verified: no custom domain in source, build, or GitHub Pages settings."
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+          path: dist
+      - name: Wait for artifact indexing
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARTIFACT_NAME: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
+        shell: bash
+        run: |
+          for attempt in $(seq 1 15); do
+            count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100" --jq '.artifacts[].name' | grep -Fxc "$ARTIFACT_NAME" || true)"
+            if [ "$count" = "1" ]; then
+              echo "Artifact $ARTIFACT_NAME is indexed and ready to publish."
+              exit 0
+            fi
+            echo "Waiting for unique Pages artifact (attempt $attempt, matches: $count)"
+            sleep 3
+          done
+          echo "::error::Pages artifact was not visible in GitHub's API after upload."
+          exit 1
+      - name: Publish website
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages-${{ github.run_id }}-${{ github.run_attempt }}
