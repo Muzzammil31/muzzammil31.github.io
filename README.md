@@ -40,7 +40,10 @@ Setup, expected JSON fields, publishing requirements and troubleshooting: [CONTR
 The primary **View CV** links now open the `#cv` section within the portfolio.
 `src/components/CVViewer.tsx` displays the original four-page PDF as a scrollable,
 high-resolution reader with thumbnail navigation, page selectors, zoom controls,
-and a link to open or download the original PDF.
+and a link to open or download the original PDF. The reader is centered with a
+1,120px maximum width, retaining side margins on desktop and mobile. Normal
+wheel/touch scroll chaining is enabled so visitors continue into the Education
+section after reaching the end of page four; an explicit Continue link also appears.
 
 The images at `public/images/cv/page-1.jpg` through `page-4.jpg` and the
 corresponding `thumb-*.jpg` previews were rendered directly from
@@ -53,6 +56,16 @@ an accessible typing status, a **Show full answer** shortcut, and
 `prefers-reduced-motion` support. Answers continue to come from verified
 portfolio data and the existing Control Center feed; the typing effect is
 presentation-only.
+
+## Reviewer-friendly engineering case studies
+
+A new **For technical reviewers** shortlist at the top of Projects highlights
+UOH AI Assistant, RedFort Studio and AI Web Summarizer Pro. Each card explains
+the problem, engineering approach, and the author's documented contribution,
+with original poster links where publicly available. It opens the existing
+detailed project-inspection modal without duplicating or replacing the 20-project
+gallery. Previews use real project documentation rather than generic stock photos;
+no numerical results are invented.
 
 ## Portfolio assistant
 

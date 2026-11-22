@@ -16,6 +16,7 @@ import { useDashboardPortfolio } from "@/lib/dashboardPortfolio";
 import { projects, type Project } from "@/data/portfolio";
 import { Reveal, SmartImage, Thumb, Lightbox } from "@/components/Media";
 import { SectionHeader } from "@/components/SectionHeader";
+import { ReviewerShortlist } from "@/components/ReviewerShortlist";
 
 const accentClass: Record<Project["accent"], string> = {
   cyan: "from-cyan/25",
@@ -112,6 +113,8 @@ export function Projects() {
           subtitle="From deployed university systems and business software to AI research and experimental builds. Explore the architecture and my contribution."
         />
 
+        <ReviewerShortlist onInspect={setOpenId} />
+
         <SharedPortfolio />
 
         <div className="mt-9 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-[#d5e2f2] bg-gradient-to-r from-[#f2f7ff] to-white px-5 py-4 shadow-sm">
@@ -135,7 +138,10 @@ export function Projects() {
           </button>
         </div>
 
-        <div className="mt-8 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+        <div
+          id="projects-search"
+          className="mt-8 flex scroll-mt-28 flex-col gap-4 lg:flex-row lg:items-center lg:justify-between"
+        >
           <div className="flex flex-wrap gap-2" role="group" aria-label="Filter projects">
             {categories.map((category) => (
               <button

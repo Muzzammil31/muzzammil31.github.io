@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 import {
+  ArrowDown,
   ArrowDownToLine,
   ArrowLeft,
   ArrowRight,
@@ -26,6 +27,7 @@ export function CVViewer() {
   const synced = useDashboardPortfolio();
   const [activePage, setActivePage] = useState(1);
   const [zoom, setZoom] = useState(100);
+  const [atEnd, setAtEnd] = useState(false);
   const [failedPages, setFailedPages] = useState<number[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
   const pageRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -67,6 +69,7 @@ export function CVViewer() {
           }
         });
         setActivePage(bestPage);
+        setAtEnd(container.scrollTop + container.clientHeight >= container.scrollHeight - 48);
         scheduled = false;
       });
     };
@@ -84,7 +87,17 @@ export function CVViewer() {
     if (event.target !== event.currentTarget) return;
     if (event.key === "ArrowRight" || event.key === "PageDown") {
       event.preventDefault();
-      scrollToPage(Math.min(pages.length, activePage + 1));
+      if (activePage === pages.length && atEnd) {
+        const nextSection = document.getElementById("education");
+        nextSection?.scrollIntoView({
+          behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "auto"
+            : "smooth",
+          block: "start",
+        });
+      } else {
+        scrollToPage(Math.min(pages.length, activePage + 1));
+      }
     } else if (event.key === "ArrowLeft" || event.key === "PageUp") {
       event.preventDefault();
       scrollToPage(Math.max(1, activePage - 1));
@@ -97,7 +110,7 @@ export function CVViewer() {
       className="section-shell scroll-mt-24 py-20 sm:py-28"
       aria-labelledby="cv-viewer-heading"
     >
-      <div className="container-shell">
+      <div className="container-shell mx-auto w-[calc(100%-1.5rem)] max-w-[1120px] sm:w-full sm:px-8 lg:px-10">
         <div className="flex flex-wrap items-end justify-between gap-5">
           <div>
             <SectionHeader
@@ -246,7 +259,7 @@ export function CVViewer() {
                 onKeyDown={onViewerKeyDown}
                 role="region"
                 aria-label="Scrollable CV pages. Use the page thumbnails or arrow keys to navigate."
-                className="cv-document-scroll relative h-[540px] overflow-auto overscroll-contain px-3 py-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary sm:h-[640px] sm:p-6 lg:h-[720px]"
+                className="cv-document-scroll relative h-[540px] overflow-auto overscroll-y-auto px-3 py-5 outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-primary sm:h-[640px] sm:p-6 lg:h-[720px]"
               >
                 <div
                   className="flex flex-col items-center gap-8"
@@ -291,10 +304,23 @@ export function CVViewer() {
                 </div>
               </div>
               <div className="flex items-center justify-between gap-2 border-t border-border bg-surface/80 px-4 py-3 text-[11px] text-muted-foreground sm:px-6">
-                <span>Scroll through the pages or choose a thumbnail</span>
-                <span className="hidden items-center gap-1 font-mono sm:inline-flex">
-                  <Maximize2 className="h-3.5 w-3.5" /> Zoom up to 150%
+                <span>
+                  {atEnd
+                    ? "End of CV · Continue exploring the portfolio"
+                    : "Scroll through the pages or choose a thumbnail"}
                 </span>
+                {atEnd ? (
+                  <a
+                    href="#education"
+                    className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-[11px] font-semibold text-primary transition-colors hover:bg-primary/20"
+                  >
+                    Continue to Education <ArrowDown className="h-3.5 w-3.5" />
+                  </a>
+                ) : (
+                  <span className="hidden items-center gap-1 font-mono sm:inline-flex">
+                    <Maximize2 className="h-3.5 w-3.5" /> Zoom up to 150%
+                  </span>
+                )}
               </div>
             </div>
           </div>
