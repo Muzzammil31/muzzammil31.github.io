@@ -271,7 +271,7 @@ export function CVViewer() {
                       ref={(node) => {
                         pageRefs.current[page.number - 1] = node;
                       }}
-                      className="cv-page-surface relative w-full max-w-[760px] scroll-mt-3"
+                      className={`cv-page-surface relative w-full max-w-[760px] scroll-mt-3 ${activePage === page.number ? "cv-page-active" : ""}`}
                       style={{
                         width: zoom < 100 ? `${zoom}%` : "100%",
                         maxWidth: zoom > 100 ? `${(760 * zoom) / 100}px` : "760px",

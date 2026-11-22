@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -52,13 +52,54 @@ function Typewriter() {
 }
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [display, setDisplay] = useState(() =>
+    typeof window !== "undefined" &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches &&
+    "IntersectionObserver" in window
+      ? 0
+      : value,
+  );
+
+  useEffect(() => {
+    const element = ref.current;
+    if (!element || !("IntersectionObserver" in window)) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let frame = 0;
+    let started = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((entry) => entry.isIntersecting) || started) return;
+        started = true;
+        const start = performance.now();
+        const animate = (now: number) => {
+          const progress = Math.min(1, (now - start) / 980);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          setDisplay(Math.round(value * eased));
+          if (progress < 1) frame = requestAnimationFrame(animate);
+        };
+        frame = requestAnimationFrame(animate);
+        observer.disconnect();
+      },
+      { threshold: 0.55 },
+    );
+    observer.observe(element);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
+  }, [value]);
+
   return (
     <span
+      ref={ref}
       className="font-display text-3xl font-bold text-foreground sm:text-4xl"
       aria-label={`${value}${suffix}`}
     >
-      {value}
-      {suffix}
+      <span aria-hidden="true">
+        {display}
+        {suffix}
+      </span>
     </span>
   );
 }

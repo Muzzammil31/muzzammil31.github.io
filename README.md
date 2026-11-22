@@ -57,6 +57,25 @@ an accessible typing status, a **Show full answer** shortcut, and
 portfolio data and the existing Control Center feed; the typing effect is
 presentation-only.
 
+## Interactive motion experience
+
+The site-wide `src/components/MotionExperience.tsx` adds lightweight
+scroll-based navigation and visual interactions without animation packages:
+
+- A fixed reading-progress trace, live section indicator, and accessible
+  desktop waypoint rail linking to every major section.
+- Staggered IntersectionObserver entrances for cards and section headings,
+  including updated cards when project or certificate filters change.
+- Mouse-following lighting and restrained 3D tilt on desktop cards, while
+  preserving card buttons and original project details.
+- Scroll-responsive hero depth, choreographed hero CTAs, and count-up stats.
+- Native scroll behavior through the four-page CV reader is preserved.
+
+The implementation uses passive scroll events, animation-frame scheduling,
+one delegated pointer listener, and `prefers-reduced-motion` support. It
+does not block content when JavaScript or IntersectionObserver is unavailable,
+and disables expensive pointer motion for touch/mobile devices.
+
 ## Reviewer-friendly engineering case studies
 
 A new **For technical reviewers** shortlist at the top of Projects highlights

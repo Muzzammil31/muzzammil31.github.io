@@ -1064,3 +1064,350 @@ button {
     transition: none;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Motion Experience · editorial movement system, no animation framework.
+   All motion is opt-in only after the client observer has initialized.
+   -------------------------------------------------------------------------- */
+.motion-reading-progress {
+  position: fixed;
+  z-index: 125;
+  inset: 0 0 auto;
+  height: 3px;
+  pointer-events: none;
+  overflow: hidden;
+  background: rgba(146, 178, 221, 0.08);
+}
+.motion-reading-progress > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #2f85d7 0%, #6f69e2 62%, #7bdaef 100%);
+  box-shadow: 0 0 18px rgba(85, 123, 233, 0.52);
+  will-change: transform;
+}
+.motion-journey-rail {
+  position: fixed;
+  right: 8px;
+  top: 50%;
+  z-index: 56;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 9px;
+  width: 27px;
+  height: min(410px, 60vh);
+  transform: translateY(-50%);
+}
+.motion-journey-track {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #d5e4f5, #bfd0e7 72%, #e1eaf7);
+  pointer-events: none;
+}
+.motion-journey-track span {
+  display: block;
+  width: 100%;
+  border-radius: inherit;
+  background: linear-gradient(180deg, #4389d2, #6d65d5, #389fc5);
+  box-shadow: 0 0 12px rgba(71, 129, 211, 0.55);
+  transition: height 0.14s linear;
+}
+.motion-journey-stop {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 25px;
+  height: 25px;
+  flex: 1;
+  place-items: center;
+  outline-offset: 2px;
+}
+.motion-journey-dot {
+  display: block;
+  width: 7px;
+  height: 7px;
+  border: 1px solid #98b9d9;
+  border-radius: 999px;
+  background: #fbfdff;
+  box-shadow: 0 1px 5px rgba(25, 67, 118, 0.13);
+  transition:
+    transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.28s,
+    box-shadow 0.28s,
+    border 0.28s;
+}
+.motion-journey-stop:hover .motion-journey-dot,
+.motion-journey-stop:focus-visible .motion-journey-dot {
+  transform: scale(1.55);
+  border-color: #3373bf;
+  background: #5ba1ee;
+}
+.motion-journey-stop.is-current .motion-journey-dot {
+  transform: scale(1.65);
+  border-color: #dcecff;
+  background: #2b75c8;
+  box-shadow:
+    0 0 0 4px rgba(59, 127, 218, 0.15),
+    0 0 15px rgba(43, 117, 200, 0.35);
+}
+.motion-journey-tooltip {
+  position: absolute;
+  top: 50%;
+  right: 35px;
+  width: max-content;
+  padding: 7px 11px;
+  transform: translate3d(6px, -50%, 0);
+  opacity: 0;
+  pointer-events: none;
+  border: 1px solid #d5e4f5;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 12px 24px rgba(17, 52, 97, 0.1);
+  color: #215184;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+}
+.motion-journey-stop:hover .motion-journey-tooltip,
+.motion-journey-stop:focus-visible .motion-journey-tooltip {
+  transform: translate3d(0, -50%, 0);
+  opacity: 1;
+}
+.motion-journey-caption {
+  position: fixed;
+  right: 35px;
+  top: 91px;
+  z-index: 55;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  max-width: 190px;
+  padding: 8px 10px;
+  border: 1px solid rgba(171, 196, 226, 0.5);
+  border-radius: 999px;
+  background: rgba(251, 253, 255, 0.83);
+  color: #31557d;
+  box-shadow: 0 12px 25px -21px rgba(22, 57, 97, 0.5);
+  font-size: 10px;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(14px);
+  pointer-events: none;
+}
+.motion-journey-status-dot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #499de1;
+  box-shadow: 0 0 0 3px rgba(70, 143, 218, 0.13);
+}
+.motion-journey-divider {
+  width: 1px;
+  height: 11px;
+  background: #cad8eb;
+}
+.motion-journey-percent {
+  font-variant-numeric: tabular-nums;
+  color: #2869ba;
+}
+@media (min-width: 1280px) and (min-height: 620px) {
+  .motion-journey-rail {
+    display: flex;
+  }
+  .motion-journey-caption {
+    display: flex;
+  }
+}
+/* Entering view never changes layout, so document and in-page links stay stable. */
+.motion-enhanced .motion-stage {
+  --motion-enter-x: 0px;
+  transition:
+    opacity 0.76s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.73s cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition-delay: var(--motion-stagger, 0ms);
+  backface-visibility: hidden;
+}
+.motion-enhanced .motion-stage[data-motion-direction="left"] {
+  --motion-enter-x: -16px;
+}
+.motion-enhanced .motion-stage[data-motion-direction="right"] {
+  --motion-enter-x: 16px;
+}
+.motion-enhanced .motion-stage:not(.motion-in-view) {
+  opacity: 0;
+  filter: blur(5px);
+  transform: translate3d(var(--motion-enter-x), 24px, 0) scale(0.982);
+}
+.motion-enhanced .motion-stage.motion-in-view {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0) scale(1);
+}
+.motion-enhanced section[id] h2.motion-stage {
+  position: relative;
+}
+.motion-enhanced section[id] h2.motion-stage::after {
+  content: "";
+  position: absolute;
+  bottom: -0.13em;
+  left: 0;
+  width: min(120px, 24%);
+  height: 2px;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #2f7cc9, #7678dc, transparent);
+  opacity: 0.7;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1) 0.18s;
+  pointer-events: none;
+}
+.motion-enhanced section[id] h2.motion-stage.motion-in-view::after {
+  transform: scaleX(1);
+}
+/* Layered glow and 3D micro-depth on hover; all cards remain clickable. */
+.motion-enhanced .motion-reactive-card {
+  --motion-tilt-x: 0deg;
+  --motion-tilt-y: 0deg;
+  --motion-light-x: 50%;
+  --motion-light-y: 50%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.32s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.3s,
+    box-shadow 0.3s,
+    background 0.35s;
+  backface-visibility: hidden;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-enhanced .motion-reactive-card.motion-in-view:hover,
+  .motion-enhanced .motion-reactive-card:not(.motion-stage):hover {
+    transform: perspective(1200px) rotateX(var(--motion-tilt-x)) rotateY(var(--motion-tilt-y))
+      translate3d(0, -3px, 0);
+    border-color: rgba(70, 125, 207, 0.33);
+    box-shadow:
+      0 24px 46px -29px rgba(33, 87, 154, 0.42),
+      0 0 0 1px rgba(98, 137, 214, 0.11);
+    background-image:
+      radial-gradient(
+        circle at var(--motion-light-x) var(--motion-light-y),
+        rgba(80, 146, 227, 0.1),
+        transparent 54%
+      ),
+      linear-gradient(153deg, #fff, #fbfcff 92%);
+  }
+  .motion-enhanced .motion-reactive-card img {
+    transition:
+      transform 0.58s cubic-bezier(0.2, 0.8, 0.2, 1),
+      filter 0.58s ease;
+  }
+  .motion-enhanced .motion-reactive-card:hover img {
+    filter: saturate(1.08);
+  }
+}
+/* Ambient parallax makes the top visual responsive to the reader's scroll. */
+@media (min-width: 768px) {
+  .motion-enhanced #home .hero-ambient {
+    transform: translate3d(0, calc(var(--motion-hero-scroll, 0) * 24px), 0);
+    will-change: transform;
+  }
+}
+/* A highly legible experience takes precedence over decoration. */
+@media (max-width: 767px) {
+  .motion-enhanced .motion-stage {
+    transition-duration: 0.6s;
+    transition-delay: 0ms;
+  }
+  .motion-enhanced .motion-stage:not(.motion-in-view) {
+    filter: none;
+    transform: translate3d(0, 16px, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-enhanced .motion-stage,
+  .motion-enhanced .motion-stage:not(.motion-in-view),
+  .motion-enhanced .motion-reactive-card,
+  .motion-enhanced .motion-reactive-card:hover,
+  .motion-enhanced #home .hero-ambient {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+  .motion-enhanced section[id] h2.motion-stage::after {
+    transform: scaleX(1);
+    transition: none;
+  }
+  .motion-journey-stop *,
+  .motion-journey-track *,
+  .motion-reading-progress * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* First impression: choreographed, restrained hero entrance and CTA response. */
+@keyframes motion-hero-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+    filter: blur(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
+}
+.motion-enhanced #home .hero-heading {
+  animation: motion-hero-enter 1.05s cubic-bezier(0.17, 0.85, 0.29, 1) 0.1s both;
+}
+.motion-enhanced #home .hero-primary-cta {
+  animation: motion-hero-enter 0.8s cubic-bezier(0.18, 0.85, 0.3, 1) 0.32s both;
+}
+.motion-enhanced #home .hero-secondary-cta {
+  animation: motion-hero-enter 0.8s cubic-bezier(0.18, 0.85, 0.3, 1) 0.43s both;
+}
+@media (hover: hover) and (pointer: fine) {
+  .motion-enhanced #home .hero-primary-cta:hover {
+    transform: translateY(-3px) scale(1.025);
+    box-shadow: 0 16px 36px rgba(83, 155, 248, 0.23);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motion-enhanced #home .hero-heading,
+  .motion-enhanced #home .hero-primary-cta,
+  .motion-enhanced #home .hero-secondary-cta {
+    animation: none !important;
+  }
+}
+
+/* Page-reading focus follows the current CV sheet without moving the reader. */
+.cv-document-scroll .cv-page-surface img {
+  transition:
+    box-shadow 0.55s ease,
+    filter 0.55s ease;
+}
+.cv-document-scroll .cv-page-surface.cv-page-active img {
+  box-shadow: 0 23px 55px -20px rgba(31, 83, 155, 0.32);
+  filter: contrast(1.015);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cv-document-scroll .cv-page-surface img {
+    transition: none;
+  }
+}

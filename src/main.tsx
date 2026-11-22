@@ -16,12 +16,14 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { CVViewer } from "@/components/CVViewer";
+import { MotionExperience } from "@/components/MotionExperience";
 import "@/styles.css";
 
 export function Portfolio() {
   return (
     <main className="relative min-h-screen overflow-x-hidden">
       <Nav />
+      <MotionExperience />
       <Hero />
       <About />
       <Experience />

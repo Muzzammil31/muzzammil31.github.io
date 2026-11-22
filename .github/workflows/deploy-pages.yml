@@ -65,6 +65,9 @@ jobs:
           grep -Rqs 'Explore my CV' dist/assets
           grep -Rqs 'Three projects worth a closer look' dist/assets
           grep -Rqs 'Continue to Education' dist/assets
+          grep -Rqs 'motion-journey-rail' dist/assets
+          grep -Rqs 'motion-reactive-card' dist/assets
+          grep -Rqs 'motion-reading-progress' dist/assets
           grep -Rqs 'muzzammilh26@gmail.com' dist/assets
           if grep -Rqs 'muzzammilhus26@gmail.com' dist/assets; then
             echo 'Outdated contact email detected in compiled site' >&2
