@@ -101,7 +101,8 @@ jobs:
           for attempt in $(seq 1 15); do
             count="$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}/artifacts?per_page=100" --jq '.artifacts[].name' | grep -Fxc "$ARTIFACT_NAME" || true)"
             if [ "$count" = "1" ]; then
-              echo "Artifact $ARTIFACT_NAME is indexed and ready to publish."
+              echo "Artifact $ARTIFACT_NAME is indexed. Waiting for Pages deployment metadata consistency."
+              sleep 20
               exit 0
             fi
             echo "Waiting for unique Pages artifact (attempt $attempt, matches: $count)"
