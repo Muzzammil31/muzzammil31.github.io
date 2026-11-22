@@ -38,6 +38,8 @@ export function PortfolioChatbot() {
   ];
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [typingMessageId, setTypingMessageId] = useState<number | null>(null);
+  const [visibleCharacters, setVisibleCharacters] = useState(0);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 0,
@@ -74,8 +76,42 @@ export function PortfolioChatbot() {
       suggestions: response.suggestions,
     };
     setMessages((previous) => [...previous, userMessage, replyMessage].slice(-26));
+    setTypingMessageId(replyMessage.id);
+    setVisibleCharacters(0);
     setInput("");
   }, []);
+
+  useEffect(() => {
+    if (!open || typingMessageId === null) return;
+    const response = messages.find((message) => message.id === typingMessageId);
+    if (!response) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const immediate = window.setTimeout(() => {
+        setVisibleCharacters(response.text.length);
+        setTypingMessageId(null);
+      }, 0);
+      return () => window.clearTimeout(immediate);
+    }
+    const charactersPerTick = Math.max(1, Math.ceil(response.text.length / 235));
+    const timer = window.setInterval(() => {
+      setVisibleCharacters((count) => Math.min(response.text.length, count + charactersPerTick));
+    }, 26);
+    return () => window.clearInterval(timer);
+  }, [open, typingMessageId, messages]);
+
+  useEffect(() => {
+    if (typingMessageId === null) return;
+    const response = messages.find((message) => message.id === typingMessageId);
+    if (response && visibleCharacters >= response.text.length) {
+      setTypingMessageId(null);
+    }
+  }, [typingMessageId, visibleCharacters, messages]);
+
+  useEffect(() => {
+    if (!open || typingMessageId === null) return;
+    const panel = messageEnd.current?.parentElement;
+    if (panel) panel.scrollTop = panel.scrollHeight;
+  }, [open, typingMessageId, visibleCharacters]);
 
   useEffect(() => {
     const onAsk = (event: Event) => {
@@ -153,7 +189,7 @@ export function PortfolioChatbot() {
 
           <div
             className="flex-1 space-y-4 overflow-y-auto bg-gradient-to-b from-[#f5f8fd] to-white px-4 py-5"
-            aria-live="polite"
+            aria-live={typingMessageId === null ? "polite" : "off"}
             aria-relevant="additions"
             aria-label="Assistant conversation"
           >
@@ -171,9 +207,34 @@ export function PortfolioChatbot() {
                   <div
                     className={`whitespace-pre-line rounded-2xl px-4 py-3 text-[12px] leading-[1.7] shadow-sm ${message.role === "visitor" ? "rounded-tr-sm bg-[#2059a4] text-white" : "rounded-tl-sm border border-[#e0e8f2] bg-white text-[#263c57]"}`}
                   >
-                    {message.text}
+                    {message.id === typingMessageId
+                      ? message.text.slice(0, visibleCharacters)
+                      : message.text}
+                    {message.id === typingMessageId && (
+                      <span
+                        aria-hidden="true"
+                        className="chat-typing-caret ml-0.5 inline-block h-[14px] w-[2px] translate-y-[2px] rounded-sm bg-[#317bc4]"
+                      />
+                    )}
                   </div>
-                  {message.links && message.links.length > 0 && (
+                  {message.id === typingMessageId && (
+                    <div className="mt-2 flex items-center justify-between gap-2 px-1">
+                      <span className="text-[10px] font-medium text-[#64809f]" role="status">
+                        Assistant is typing...
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setVisibleCharacters(message.text.length);
+                          setTypingMessageId(null);
+                        }}
+                        className="text-[10px] font-semibold text-[#215ba0] underline-offset-2 hover:underline"
+                      >
+                        Show full answer
+                      </button>
+                    </div>
+                  )}
+                  {message.id !== typingMessageId && message.links && message.links.length > 0 && (
                     <div className="mt-2 flex flex-wrap gap-2">
                       {message.links.map((link) => {
                         const isCv = link.href === bundledCvHref;
@@ -198,22 +259,24 @@ export function PortfolioChatbot() {
                       })}
                     </div>
                   )}
-                  {message.suggestions && message.id === messages[messages.length - 1]?.id && (
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {(message.id === 0 ? openingPrompts : message.suggestions)
-                        .slice(0, 4)
-                        .map((prompt) => (
-                          <button
-                            key={prompt}
-                            type="button"
-                            onClick={() => sendQuestion(prompt)}
-                            className="rounded-full border border-[#d3dff0] bg-white px-3 py-2 text-left text-[11px] font-medium leading-tight text-[#285286] transition hover:border-[#8aaedb] hover:bg-[#edf4ff]"
-                          >
-                            {prompt}
-                          </button>
-                        ))}
-                    </div>
-                  )}
+                  {message.suggestions &&
+                    message.id === messages[messages.length - 1]?.id &&
+                    message.id !== typingMessageId && (
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        {(message.id === 0 ? openingPrompts : message.suggestions)
+                          .slice(0, 4)
+                          .map((prompt) => (
+                            <button
+                              key={prompt}
+                              type="button"
+                              onClick={() => sendQuestion(prompt)}
+                              className="rounded-full border border-[#d3dff0] bg-white px-3 py-2 text-left text-[11px] font-medium leading-tight text-[#285286] transition hover:border-[#8aaedb] hover:bg-[#edf4ff]"
+                            >
+                              {prompt}
+                            </button>
+                          ))}
+                      </div>
+                    )}
                 </div>
               </div>
             ))}

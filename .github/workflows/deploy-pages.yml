@@ -49,6 +49,10 @@ jobs:
           grep -Fq 'data-feed="https://muzzammil-hussain-portfolio.excellentbrush8.chatgpt.site/live/portfolio.json"' dist/index.html
           grep -Rqs 'data-dashboard-cv' dist/assets
           test -s dist/images/muzammil-profile.jpg
+          for page in 1 2 3 4; do
+            test -s "dist/images/cv/page-$page.jpg"
+            test -s "dist/images/cv/thumb-$page.jpg"
+          done
           test -s dist/files/projects/uoh-assistant-poster.pdf
           test -s dist/files/projects/ai-web-summarizer-poster.pdf
           for scan in google-ai-essentials.jpg opswat-cip.jpg arch-generative-ai.jpg technik-nest-internship.png; do
@@ -57,6 +61,8 @@ jobs:
           grep -Rqs 'Smart Fire-Fighting Robot' dist/assets
           grep -Rqs 'Google AI Essentials' dist/assets
           grep -Rqs 'Portfolio Assistant' dist/assets
+          grep -Rqs 'Show full answer' dist/assets
+          grep -Rqs 'Explore my CV' dist/assets
           grep -Rqs 'muzzammilh26@gmail.com' dist/assets
           if grep -Rqs 'muzzammilhus26@gmail.com' dist/assets; then
             echo 'Outdated contact email detected in compiled site' >&2

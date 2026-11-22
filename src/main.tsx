@@ -15,6 +15,7 @@ import {
 } from "@/components/Sections";
 import { Toaster } from "@/components/ui/sonner";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
+import { CVViewer } from "@/components/CVViewer";
 import "@/styles.css";
 
 export function Portfolio() {
@@ -27,6 +28,7 @@ export function Portfolio() {
       <Projects />
       <Skills />
       <Certificates />
+      <CVViewer />
       <Education />
       <Achievements />
       <Contact />

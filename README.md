@@ -35,6 +35,25 @@ The published portfolio loads `public/portfolio-sync.js` from `index.html` using
 
 Setup, expected JSON fields, publishing requirements and troubleshooting: [CONTROL_CENTER_SYNC.md](CONTROL_CENTER_SYNC.md).
 
+## CV preview and assistant typing
+
+The primary **View CV** links now open the `#cv` section within the portfolio.
+`src/components/CVViewer.tsx` displays the original four-page PDF as a scrollable,
+high-resolution reader with thumbnail navigation, page selectors, zoom controls,
+and a link to open or download the original PDF.
+
+The images at `public/images/cv/page-1.jpg` through `page-4.jpg` and the
+corresponding `thumb-*.jpg` previews were rendered directly from
+`public/resume.pdf`. Whenever you replace the original CV, regenerate those
+previews as well so the on-page reader stays in sync. A newer live Control Center
+CV, when available, is still linked separately through the Download CV button.
+
+The portfolio chatbot reveals new answers progressively with a blinking cursor,
+an accessible typing status, a **Show full answer** shortcut, and
+`prefers-reduced-motion` support. Answers continue to come from verified
+portfolio data and the existing Control Center feed; the typing effect is
+presentation-only.
+
 ## Portfolio assistant
 
 The floating **Ask about my work** chatbot and **Ask** actions on project cards answer common questions from the public portfolio data. They cover projects, architecture, tech stacks, work experience, internships, certifications, education, contact details and the CV.

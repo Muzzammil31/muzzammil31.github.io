@@ -232,8 +232,11 @@ export function respondToPortfolioQuestion(
   }
   if (/\b(cv|resume|curriculum|download|pdf)\b/.test(q) && !/summari[sz]/.test(q)) {
     return answer(
-      "Use the CV link below to view the current CV. It covers AI engineering experience, internships, education, and projects.",
-      [{ label: "Download updated CV", href: `${import.meta.env.BASE_URL}resume.pdf` }],
+      "You can read all four CV pages directly on this website, with thumbnails and page navigation. The original PDF is also available to download.",
+      [
+        { label: "View CV pages", href: "#cv" },
+        { label: "Download PDF", href: `${import.meta.env.BASE_URL}resume.pdf` },
+      ],
       [prompts.redfort, prompts.skills, prompts.contact],
     );
   }

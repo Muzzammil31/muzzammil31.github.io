@@ -9,6 +9,7 @@ const links = [
   { id: "projects", label: "Projects" },
   { id: "skills", label: "Skills" },
   { id: "certificates", label: "Certificates" },
+  { id: "cv", label: "View CV" },
   { id: "education", label: "Education" },
   { id: "achievements", label: "Research" },
   { id: "participation", label: "Participation" },
@@ -111,12 +112,10 @@ export function Nav() {
 
           <div className="flex items-center gap-2">
             <a
-              data-dashboard-cv
-              href={synced.cvHref}
-              download={synced.cvDownload}
+              href="#cv"
               className="hidden items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 text-xs font-semibold text-foreground whitespace-nowrap transition-colors hover:bg-surface-2 sm:inline-flex"
             >
-              {synced.cvLabel}
+              View CV
             </a>
             <a
               href="#contact"
