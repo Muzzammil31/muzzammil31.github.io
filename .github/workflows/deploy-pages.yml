@@ -55,8 +55,11 @@ jobs:
           done
           test -s dist/files/projects/uoh-assistant-poster.pdf
           test -s dist/files/projects/ai-web-summarizer-poster.pdf
-          for scan in google-ai-essentials.jpg opswat-cip.jpg arch-generative-ai.jpg technik-nest-internship.png; do
+          for scan in google-ai-essentials-safe.svg opswat-cip-safe.svg arch-generative-ai-safe.svg technik-nest-internship-safe.svg; do
             test -s "dist/images/certificates/$scan"
+          done
+          for old_scan in google-ai-essentials.jpg opswat-cip.jpg arch-generative-ai.jpg technik-nest-internship.png; do
+            test ! -e "dist/images/certificates/$old_scan"
           done
           grep -Rqs 'Smart Fire-Fighting Robot' dist/assets
           grep -Rqs 'Google AI Essentials' dist/assets
