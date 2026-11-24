@@ -187,8 +187,8 @@ export const journalEntries: JournalEntry[] = [
   },
 ];
 export const journeyEvents = [
-  { year: "2022", title: "University foundation", label: "BS Artificial Intelligence · University of Haripur", description: "Began formal AI studies and explored programming, data and machine-learning foundations.", projectIds: [] },
-  { year: "2023–24", title: "Learning by building", label: "Early projects and software internships", description: "Worked on practical software, computer-vision and AI exercises alongside university study and internships.", projectIds: ["news-sentiment"] },
+  { year: "University years", title: "University foundation", label: "BS Artificial Intelligence · University of Haripur", description: "Began formal AI studies and explored programming, data and machine-learning foundations.", projectIds: [] },
+  { year: "During university", title: "Learning by building", label: "Early projects and software internships", description: "Worked on practical software, computer-vision and AI exercises alongside university study and internships.", projectIds: ["news-sentiment"] },
   { year: "2025", title: "First independent business delivery", label: "Kaswa software · Technik Nest · Arch Technologies", description: "Developed and handed over business software while gaining experience through professional training and internships.", projectIds: ["kaswa"] },
   { year: "2026", title: "University implementation", label: "UOH AI Assistant · final-year project", description: "Completed and deployed the university assistant and advanced applied-AI projects.", projectIds: ["uoh", "interviewpilot"] },
   { year: "2026 · Now", title: "Professional AI delivery", label: "Red Fort / RFT 360 work · client AI development", description: "Contributed to AI automation and video production systems; delivered DataSense for a client. The current role name 'Red Code' is awaiting confirmation against available employment records.", projectIds: ["redfort", "datasense"] },
