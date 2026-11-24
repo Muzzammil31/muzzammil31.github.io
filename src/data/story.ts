@@ -23,7 +23,8 @@ export const deliveries: Delivery[] = [
     date: "2025",
     kind: "Client delivery",
     status: "Delivered",
-    description: "Independently designed and handed over an AI-based business software solution supporting marketing and investment-related workflows.",
+    description:
+      "Independently designed and handed over an AI-based business software solution supporting marketing and investment-related workflows.",
     technology: ["AI software", "Business automation", "Testing", "Deployment"],
     contribution: "Owned architecture, development, testing, and handover.",
     projectId: "kaswa-software",
@@ -35,8 +36,18 @@ export const deliveries: Delivery[] = [
     date: "2026",
     kind: "University implementation · FYP",
     status: "Implemented",
-    description: "An AI university assistant for academic policies, admissions, fees, semester questions, and document-based search, with an administrative interface.",
-    technology: ["Python", "FastAPI", "React", "Sentence-BERT", "TF-IDF", "ChromaDB", "Ollama", "Docker"],
+    description:
+      "An AI university assistant for academic policies, admissions, fees, semester questions, and document-based search, with an administrative interface.",
+    technology: [
+      "Python",
+      "FastAPI",
+      "React",
+      "Sentence-BERT",
+      "TF-IDF",
+      "ChromaDB",
+      "Ollama",
+      "Docker",
+    ],
     contribution: "Designed and deployed a university-facing AI assistant as a final-year project.",
     projectId: "uoh-assistant",
     evidence: "files/projects/uoh-assistant-poster.pdf",
@@ -48,7 +59,8 @@ export const deliveries: Delivery[] = [
     date: "Delivery date not documented",
     kind: "University stakeholder delivery",
     status: "Owner-reported",
-    description: "A newspaper sentiment-analysis dashboard for collecting and interpreting business/news coverage. The owner reports presenting it to the principal; the delivery date and feedback remain unverified.",
+    description:
+      "A newspaper sentiment-analysis dashboard for collecting and interpreting business/news coverage. The owner reports presenting it to the principal; the delivery date and feedback remain unverified.",
     technology: ["Python", "NLP", "Sentiment analysis", "Dashboards"],
     contribution: "Built the news-processing and sentiment-visualization workflow.",
     projectId: "news-sentiment",
@@ -60,7 +72,8 @@ export const deliveries: Delivery[] = [
     date: "2026 · exact date not documented",
     kind: "Client delivery",
     status: "Delivered",
-    description: "Natural-language access to structured SQL databases and PDF documents, combining read-only text-to-SQL guardrails with retrieval-augmented document search.",
+    description:
+      "Natural-language access to structured SQL databases and PDF documents, combining read-only text-to-SQL guardrails with retrieval-augmented document search.",
     technology: ["Python", "FastAPI", "React", "Llama 3.1", "Ollama", "SQL", "RAG", "LangChain"],
     contribution: "Developed and delivered an AI data-intelligence workflow for a client.",
     projectId: "datasense-ai",
@@ -72,7 +85,8 @@ export const deliveries: Delivery[] = [
     date: "2026 · exact date not documented",
     kind: "Applied AI product",
     status: "Implemented",
-    description: "Resume- and job-description-aware interview assistance with relevant question generation, speech recognition, and real-time audio interaction.",
+    description:
+      "Resume- and job-description-aware interview assistance with relevant question generation, speech recognition, and real-time audio interaction.",
     technology: ["Python", "LLMs", "OpenRouter", "Whisper", "Speech recognition", "PyInstaller"],
     contribution: "Built contextual interview support with real-time voice processing.",
     projectId: "interviewpilot-ai",
@@ -84,9 +98,11 @@ export const deliveries: Delivery[] = [
     date: "2026 · ongoing",
     kind: "Professional engineering",
     status: "In progress",
-    description: "Production-oriented AI video workflows: model/API connectivity, automated captions, remote generation, cancellation, and media-library improvements.",
+    description:
+      "Production-oriented AI video workflows: model/API connectivity, automated captions, remote generation, cancellation, and media-library improvements.",
     technology: ["LTX 2.5", "WAN 2.2", "API integration", "Python", "AI automation"],
-    contribution: "Engineering, model integration, diagnostics, testing, and workflow improvements.",
+    contribution:
+      "Engineering, model integration, diagnostics, testing, and workflow improvements.",
     projectId: "redfort-studio",
   },
   {
@@ -96,7 +112,8 @@ export const deliveries: Delivery[] = [
     date: "Dates and individual project titles not supplied",
     kind: "Student FYP development",
     status: "Owner-reported",
-    description: "The portfolio owner reports developing FYPs for students. Specific student projects, completion dates and permission to publish their details have not yet been documented.",
+    description:
+      "The portfolio owner reports developing FYPs for students. Specific student projects, completion dates and permission to publish their details have not yet been documented.",
     technology: ["AI/ML", "Applied software", "Project documentation"],
     contribution: "Reported technical development and implementation support.",
   },
@@ -187,15 +204,51 @@ export const journalEntries: JournalEntry[] = [
   },
 ];
 export const journeyEvents = [
-  { year: "University years", title: "University foundation", label: "BS Artificial Intelligence · University of Haripur", description: "Began formal AI studies and explored programming, data and machine-learning foundations.", projectIds: [] },
-  { year: "During university", title: "Learning by building", label: "Early projects and software internships", description: "Worked on practical software, computer-vision and AI exercises alongside university study and internships.", projectIds: ["news-sentiment"] },
-  { year: "2025", title: "First independent business delivery", label: "Kaswa software · Technik Nest · Arch Technologies", description: "Developed and handed over business software while gaining experience through professional training and internships.", projectIds: ["kaswa"] },
-  { year: "2026", title: "University implementation", label: "UOH AI Assistant · final-year project", description: "Completed and deployed the university assistant and advanced applied-AI projects.", projectIds: ["uoh", "interviewpilot"] },
-  { year: "2026 · Now", title: "Professional AI delivery", label: "Red Fort / RFT 360 work · client AI development", description: "Contributed to AI automation and video production systems; delivered DataSense for a client. The current role name 'Red Code' is awaiting confirmation against available employment records.", projectIds: ["redfort", "datasense"] },
+  {
+    year: "University years",
+    title: "University foundation",
+    label: "BS Artificial Intelligence · University of Haripur",
+    description:
+      "Began formal AI studies and explored programming, data and machine-learning foundations.",
+    projectIds: [],
+  },
+  {
+    year: "During university",
+    title: "Learning by building",
+    label: "Early projects and software internships",
+    description:
+      "Worked on practical software, computer-vision and AI exercises alongside university study and internships.",
+    projectIds: ["news-sentiment"],
+  },
+  {
+    year: "2025",
+    title: "First independent business delivery",
+    label: "Kaswa software · Technik Nest · Arch Technologies",
+    description:
+      "Developed and handed over business software while gaining experience through professional training and internships.",
+    projectIds: ["kaswa"],
+  },
+  {
+    year: "2026",
+    title: "University implementation",
+    label: "UOH AI Assistant · final-year project",
+    description:
+      "Completed and deployed the university assistant and advanced applied-AI projects.",
+    projectIds: ["uoh", "interviewpilot"],
+  },
+  {
+    year: "2026 · Now",
+    title: "Professional AI delivery",
+    label: "Red Fort / RFT 360 work · client AI development",
+    description:
+      "Contributed to AI automation and video production systems; delivered DataSense for a client. The current role name 'Red Code' is awaiting confirmation against available employment records.",
+    projectIds: ["redfort", "datasense"],
+  },
 ];
 export const linkedInEndorsement = {
   author: "Muhammad Muddassir Hussain",
-  excerpt: "Muzammil has a rare combination of deep technical knowledge and practical problem-solving skills.",
+  excerpt:
+    "Muzammil has a rare combination of deep technical knowledge and practical problem-solving skills.",
   source: "https://www.linkedin.com/in/muzzammil-hussain-864752246/",
   status: "Publicly visible LinkedIn recommendation",
 };

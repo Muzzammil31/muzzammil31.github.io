@@ -65,7 +65,8 @@ export function Certificates() {
 
         <p className="mt-5 text-xs font-medium text-muted-foreground">
           Showing {list.length} of {certificates.length} credential records ·{" "}
-          {certificates.filter((c) => Boolean(c.image)).length} privacy-safe credential previews available
+          {certificates.filter((c) => Boolean(c.image)).length} privacy-safe credential previews
+          available
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c, i) => (
@@ -185,7 +186,6 @@ export function Certificates() {
                   label="Issued"
                   value={open.date}
                 />
-
               </div>
 
               {open.image && (
