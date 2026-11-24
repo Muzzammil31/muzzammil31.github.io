@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { PortfolioChatbot } from "@/components/PortfolioChatbot";
 import { CVViewer } from "@/components/CVViewer";
 import { MotionExperience } from "@/components/MotionExperience";
+import { DeliveredWork, Journey, FieldNotes, Reputation } from "@/components/Stories";
 import "@/styles.css";
 
 export function Portfolio() {
@@ -27,12 +28,16 @@ export function Portfolio() {
       <Hero />
       <About />
       <Experience />
+      <Journey />
       <Projects />
+      <DeliveredWork />
       <Skills />
       <Certificates />
       <CVViewer />
       <Education />
       <Achievements />
+      <FieldNotes />
+      <Reputation />
       <Contact />
       <Footer />
       <PortfolioChatbot />
