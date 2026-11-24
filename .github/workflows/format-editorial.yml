@@ -1,0 +1,44 @@
+name: Format portfolio editorial updates
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/format-editorial.yml"
+      - "src/components/Stories.tsx"
+      - "src/data/story.ts"
+      - "src/data/portfolio.ts"
+      - "src/components/Certificates.tsx"
+      - "src/components/Nav.tsx"
+      - "src/components/MotionExperience.tsx"
+      - "src/main.tsx"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    name: Normalize editorial formatting
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+      - run: npm ci
+      - name: Format edited website sources
+        run: |
+          npx prettier --write src/components/Stories.tsx src/data/story.ts src/data/portfolio.ts src/components/Certificates.tsx src/components/Nav.tsx src/components/MotionExperience.tsx src/main.tsx .github/workflows/deploy-pages.yml
+      - name: Commit formatted sources if needed
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add src/components/Stories.tsx src/data/story.ts src/data/portfolio.ts src/components/Certificates.tsx src/components/Nav.tsx src/components/MotionExperience.tsx src/main.tsx .github/workflows/deploy-pages.yml
+            git commit -m "Normalize portfolio story and privacy formatting"
+            git push origin HEAD:main
+          fi
