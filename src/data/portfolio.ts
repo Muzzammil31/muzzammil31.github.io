@@ -50,7 +50,7 @@ export const profile = {
 
 export const stats = [
   { label: "Practical experience", value: 1, suffix: " year" },
-  { label: "AI projects & concepts", value: 20, suffix: "" },
+  { label: "AI projects & concepts", value: 22, suffix: "" },
   { label: "Internships", value: 6, suffix: "" },
   { label: "Certificates & training", value: 7, suffix: "" },
 ];
@@ -105,19 +105,19 @@ export const projects: Project[] = [
     problem:
       "Students need a practical place to ask university-related academic and administrative questions.",
     architecture: [
-      "Retrieval-Augmented Generation (RAG)",
-      "University information and document handling",
-      "Voice and multilingual interaction",
+      "FastAPI backend and React interface with administrative controls",
+      "Semantic retrieval using Sentence-BERT, TF-IDF and ChromaDB",
+      "Ollama LLM, document retrieval and multilingual question answering",
     ],
     features: [
-      "Answers questions about university services",
-      "Voice support and multilingual interaction",
-      "File handling for a more useful student assistant",
+      "Answers university admissions, fee, policy and semester questions",
+      "GPA calculator, document/PDF support and admin management",
+      "Semantic search, NLP matching and student-facing interface",
       "Successfully deployed for use in a government-university environment",
     ],
     contribution:
       "Designed and developed the assistant as a BS Artificial Intelligence Final Year Project.",
-    stack: ["AI", "LLMs", "RAG", "Voice", "Multilingual", "File handling"],
+    stack: ["Python", "FastAPI", "React", "Sentence-BERT", "TF-IDF", "ChromaDB", "Ollama", "Docker"],
     images: ["/images/projects/uoh-assistant-poster.jpg"],
     report: "files/projects/uoh-assistant-poster.pdf",
     accent: "cyan",
@@ -475,6 +475,33 @@ export const projects: Project[] = [
     stack: ["ESP32", "Arduino IDE", "IoT", "Flame sensors", "Ultrasonic", "Blynk", "Web UI"],
     images: [],
     accent: "amber",
+  },
+
+  {
+    id: "interviewpilot-ai",
+    code: "AI-20",
+    title: "InterviewPilot AI",
+    tagline: "Voice-aware interview assistant · AI product",
+    problem: "Preparing for interviews requires connecting job descriptions, resumes and conversational practice.",
+    architecture: ["Context generation from resumes and job descriptions", "OpenRouter-powered LLM question and answer workflows", "Whisper speech recognition, audio processing and desktop packaging"],
+    features: ["Resume- and role-aware interview question generation", "Context-sensitive answers and voice interaction", "Real-time audio processing and packaged desktop experience"],
+    contribution: "Built an AI-powered interview assistant integrating language models and audio workflows.",
+    stack: ["Python", "LLMs", "OpenRouter", "Whisper", "Speech Recognition", "PyInstaller"],
+    images: [],
+    accent: "cyan",
+  },
+  {
+    id: "datasense-ai",
+    code: "AI-21",
+    title: "DataSense AI — Natural Language Data Assistant",
+    tagline: "Text-to-SQL and document Q&A · Client AI delivery",
+    problem: "People need answers from databases and PDF documents without manually writing complex queries.",
+    architecture: ["Natural-language-to-SQL with validation and read-only safeguards", "RAG document indexing and semantic retrieval", "Local Llama 3.1/Ollama model integration with application APIs"],
+    features: ["Conversational analysis of structured SQL data", "Question answering over PDFs and documents", "Unified interface for database and document questions"],
+    contribution: "Designed and delivered an AI data assistant integrating structured querying and retrieval-augmented generation.",
+    stack: ["Python", "FastAPI", "React", "Llama 3.1", "Ollama", "SQL", "LangChain", "RAG"],
+    images: [],
+    accent: "violet",
   },
 ];
 
