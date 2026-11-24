@@ -671,9 +671,9 @@ export const certificates: Certificate[] = [
     description:
       "Google AI Essentials course completion recorded in the archived July 2026 CV and supported by the original certificate.",
     date: "07 Aug 2024",
-    credentialId: "See original scan",
+    credentialId: "Not displayed",
     skills: ["Generative AI", "Responsible AI", "Prompt engineering"],
-    image: "/images/certificates/google-ai-essentials.jpg",
+    image: "/images/certificates/google-ai-essentials-safe.svg",
   },
   {
     id: "opswat-cip",
@@ -683,9 +683,9 @@ export const certificates: Certificate[] = [
     description:
       "Completed the Introduction to CIP program. The certificate records an expiry date in March 2026.",
     date: "17 Mar 2025",
-    credentialId: "nniB8cipFQ",
+    credentialId: "Not displayed",
     skills: ["Critical infrastructure", "Cybersecurity", "Security awareness"],
-    image: "/images/certificates/opswat-cip.jpg",
+    image: "/images/certificates/opswat-cip-safe.svg",
   },
   {
     id: "arch-generative-ai",
@@ -695,9 +695,9 @@ export const certificates: Certificate[] = [
     description:
       "Generative AI training recorded in the archived CV; a matching Arch Technologies completion certificate is attached.",
     date: "01 Jul 2024 (CV)",
-    credentialId: "ARCH-2504-0409",
+    credentialId: "Not displayed",
     skills: ["Generative AI", "AI training", "Software development"],
-    image: "/images/certificates/arch-generative-ai.jpg",
+    image: "/images/certificates/arch-generative-ai-safe.svg",
   },
   {
     id: "technik-ai-ml-internship",
@@ -707,9 +707,9 @@ export const certificates: Certificate[] = [
     description:
       "Certificate for a six-week AI/ML internship covering algorithms, preprocessing and model training, June–July 2025.",
     date: "04 Aug 2025",
-    credentialId: "TN/IN01/AM/003",
+    credentialId: "Not displayed",
     skills: ["Machine Learning", "Data preprocessing", "Model training"],
-    image: "/images/certificates/technik-nest-internship.png",
+    image: "/images/certificates/technik-nest-internship-safe.svg",
   },
   {
     id: "kaswa-software-delivery",
@@ -719,7 +719,7 @@ export const certificates: Certificate[] = [
     description:
       "Software-delivery recognition described in the latest CV; a separate certificate scan has not been recovered.",
     date: "2025",
-    credentialId: "Not listed",
+    credentialId: "Not displayed",
     skills: ["AI software delivery", "Project development", "Deployment"],
     image: "",
   },
@@ -731,7 +731,7 @@ export const certificates: Certificate[] = [
     description:
       "A project-completion entry documented in the latest CV. The recovered Technik Nest image is an internship certificate, not a separate project document.",
     date: "Not separately recorded",
-    credentialId: "Not separately verified",
+    credentialId: "Not displayed",
     skills: ["Software projects", "AI development", "Internship work"],
     image: "",
   },
@@ -743,7 +743,7 @@ export const certificates: Certificate[] = [
     description:
       "Training entry listed in the archived July 2026 CV. Its old attachment points to a Technik Nest certificate, so no matching scan is available yet.",
     date: "20 Jul 2025 (CV)",
-    credentialId: "Scan not found",
+    credentialId: "Not displayed",
     skills: ["Artificial Intelligence", "Machine Learning", "Applied sciences"],
     image: "",
   },
