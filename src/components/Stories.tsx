@@ -157,7 +157,9 @@ export function Reputation() {
         <Reveal>
           <div className="panel flex h-full flex-col p-6 sm:p-8">
             <div className="flex items-center gap-3"><Quote className="h-7 w-7 text-primary" /><h3 className="text-xl font-bold">LinkedIn recommendations</h3></div>
-            <p className="mt-4 text-sm leading-7 text-muted-foreground">Two recommendations were reported by the portfolio owner. For authenticity, the original wording and author names need to be checked against the LinkedIn profile before reproducing either quote here.</p>
+            <blockquote className="mt-4 border-l-2 border-primary/40 pl-4 text-sm italic leading-7 text-muted-foreground">“Muzammil has a rare combination of deep technical knowledge and practical problem-solving skills.”</blockquote>
+            <p className="mt-3 text-xs font-semibold text-primary">Muhammad Muddassir Hussain · LinkedIn recommendation</p>
+            <p className="mt-3 text-xs leading-6 text-muted-foreground">One recommendation and its attribution could be verified on the public profile. A second recommendation was mentioned by the portfolio owner but its text is not publicly verifiable, so it has not been quoted.</p>
             <a href="https://www.linkedin.com/in/muzammil-hussain-864752246/" target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex items-center gap-2 pt-6 text-sm font-semibold text-primary">Read recommendations on LinkedIn <ExternalLink className="h-4 w-4" /></a>
           </div>
         </Reveal>
