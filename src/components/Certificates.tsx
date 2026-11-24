@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Search, X, BadgeCheck, Calendar, Hash, Building2, Maximize2 } from "lucide-react";
+import { Search, X, BadgeCheck, Calendar, Building2, Maximize2 } from "lucide-react";
 import { certificates, type Certificate } from "@/data/portfolio";
 import { Reveal, SmartImage, Lightbox } from "@/components/Media";
 import { SectionHeader } from "@/components/SectionHeader";
@@ -31,7 +31,7 @@ export function Certificates() {
           index="05"
           kicker="Credential Vault"
           title="CERTIFICATION VAULT"
-          subtitle="Certificate scans, professional recognitions, and CV-documented training. Records without a recovered scan are clearly identified."
+          subtitle="Privacy-safe credential previews, professional recognitions and CV-documented training. No credential IDs are shown or linked."
         />
 
         <Reveal delay={80}>
@@ -65,7 +65,7 @@ export function Certificates() {
 
         <p className="mt-5 text-xs font-medium text-muted-foreground">
           Showing {list.length} of {certificates.length} credential records ·{" "}
-          {certificates.filter((c) => Boolean(c.image)).length} original document scans available
+          {certificates.filter((c) => Boolean(c.image)).length} privacy-safe credential previews available
         </p>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((c, i) => (
@@ -93,7 +93,7 @@ export function Certificates() {
                         CV-documented recognition
                       </span>
                       <span className="text-[11px] text-[#a9c0dc]">
-                        Original certificate image not recovered
+                        Original certificate preview unavailable
                       </span>
                     </div>
                   )}
@@ -145,7 +145,7 @@ export function Certificates() {
                 type="button"
                 onClick={() => setZoom(open.image)}
                 className="group relative block w-full overflow-hidden rounded-t-2xl border-b border-border"
-                aria-label="Enlarge original certificate scan"
+                aria-label="Enlarge privacy-safe certificate preview"
               >
                 <SmartImage
                   src={open.image}
@@ -185,11 +185,7 @@ export function Certificates() {
                   label="Issued"
                   value={open.date}
                 />
-                <Meta
-                  icon={<Hash className="h-3.5 w-3.5" />}
-                  label="Credential ID"
-                  value={open.credentialId}
-                />
+
               </div>
 
               {open.image && (
@@ -199,7 +195,7 @@ export function Certificates() {
                   rel="noopener noreferrer"
                   className="mt-5 inline-flex items-center gap-2 rounded-xl border border-primary/20 bg-primary/10 px-4 py-2.5 text-xs font-semibold text-primary transition hover:bg-primary/15"
                 >
-                  <Maximize2 className="h-4 w-4" /> Open original certificate image
+                  <Maximize2 className="h-4 w-4" /> Open privacy-safe certificate preview
                 </a>
               )}
               <div className="mt-5">
