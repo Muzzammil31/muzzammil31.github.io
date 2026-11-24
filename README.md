@@ -97,3 +97,33 @@ The GitHub Pages workflow checks that the production bundle contains the assista
 ## Content
 
 Edit `src/data/portfolio.ts` to update work history, skills, certificates and project entries. The portfolio preserves the Red Fort/RFT 360 experience, UOH Assistant, Kaswa software, and the remaining CV projects.
+
+
+## Diary, delivery record, interactive journey and privacy
+
+The public site now includes:
+
+- **Build Diary**: dated, authored field notes about university AI systems, client
+  delivery, LLM workflows and production AI. Entries are editorial reflections
+  based on existing work, not automatically generated daily event claims.
+- **Delivered & Implemented**: project-specific cards with technology, role,
+  reported recipient and the most precise date available. Undocumented dates
+  and owner-reported handovers are labelled as such.
+- **Journey**: an interactive university-to-industry timeline connected to
+  real project records and the existing scroll animation engine.
+- **Reviews & Recommendations**: the verified public LinkedIn excerpt with
+  attribution, and a link to the original profile. No client review is
+  published without its author and original wording.
+
+**Certificate privacy:** current public builds intentionally contain only
+privacy-safe, newly generated SVG summaries for four available credentials,
+not their original JPG/PNG scans. The GitHub Pages workflow rejects those
+original scan filenames. Credential IDs are not shown or embedded in the new
+previews. The previously committed original images can still be accessible in
+historical Git commits and caches; deleting paths from the latest Git tree
+does not erase repository history. Full history sanitization needs a separate
+explicitly approved rewrite or migration to a clean repository.
+
+The existing React portfolio, AI chatbot, CV reader, projects, and Control
+Center feed remain integrated. Publish updates exclusively through this
+`muzzammil31.github.io` repository.
